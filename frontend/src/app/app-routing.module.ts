@@ -1,0 +1,53 @@
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { MainLayoutComponent } from './layouts/main-layout/main-layout.component';
+import { DashboardComponent } from './pages/dashboard/dashboard.component';
+import { EmployeesComponent } from './pages/employees/employees.component';
+import { EmployeeFormComponent } from './pages/employees/employee-form/employee-form.component';
+import { LoginComponent } from './pages/auth/login/login.component';
+import { AuthGuard } from './core/guards/auth.guard';
+
+const routes: Routes = [
+  {
+    path: 'login',
+    component: LoginComponent
+  },
+  {
+    path: '',
+    component: MainLayoutComponent,
+    canActivate: [AuthGuard],
+    children: [
+      {
+        path: '',
+        redirectTo: 'dashboard',
+        pathMatch: 'full'
+      },
+      {
+        path: 'dashboard',
+        component: DashboardComponent
+      },
+      {
+        path: 'employees',
+        component: EmployeesComponent
+      },
+      {
+        path: 'employees/new',
+        component: EmployeeFormComponent
+      },
+      {
+        path: 'employees/edit/:id',
+        component: EmployeeFormComponent
+      }
+    ]
+  },
+  {
+    path: '**',
+    redirectTo: 'dashboard'
+  }
+];
+
+@NgModule({
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
+})
+export class AppRoutingModule { }

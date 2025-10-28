@@ -1,0 +1,159 @@
+<div class="space-y-6">
+  <!-- Page Header -->
+  <div class="flex items-center justify-between">
+    <h1 class="text-3xl font-bold text-gray-900">Employés</h1>
+    <button (click)="createEmployee()" class="btn btn-primary">
+      + Ajouter Employé
+    </button>
+  </div>
+
+  <!-- Loading State -->
+  <div *ngIf="loading" class="flex items-center justify-center h-64">
+    <div class="text-gray-500">Chargement...</div>
+  </div>
+
+  <!-- Employees Table -->
+  <div *ngIf="!loading" class="card overflow-hidden">
+    <!-- Desktop/Tablet View -->
+    <div class="hidden md:block overflow-x-auto">
+      <table class="w-full">
+        <thead class="bg-gray-50 border-b border-gray-200">
+          <tr>
+            <th class="px-4 lg:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nom</th>
+            <th class="px-4 lg:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
+            <th class="px-4 lg:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Position</th>
+            <th class="hidden lg:table-cell px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Département</th>
+            <th class="px-4 lg:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Statut</th>
+            <th class="px-4 lg:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+          </tr>
+        </thead>
+        <tbody class="bg-white divide-y divide-gray-200">
+          <tr *ngFor="let employee of employees" class="hover:bg-gray-50">
+            <td class="px-4 lg:px-6 py-4 whitespace-nowrap">
+              <div class="flex items-center">
+                <img
+                  [src]="employee.avatar || 'https://ui-avatars.com/api/?name=' + employee.firstName + '+' + employee.lastName"
+                  [alt]="employee.firstName + ' ' + employee.lastName"
+                  class="w-8 lg:w-10 h-8 lg:h-10 rounded-full mr-2 lg:mr-3"
+                />
+                <div class="text-sm font-medium text-gray-900">
+                  {{ employee.firstName }} {{ employee.lastName }}
+                </div>
+              </div>
+            </td>
+            <td class="px-4 lg:px-6 py-4 text-sm text-gray-600">
+              <div class="max-w-[150px] truncate">{{ employee.email }}</div>
+            </td>
+            <td class="px-4 lg:px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+              {{ employee.position }}
+            </td>
+            <td class="hidden lg:table-cell px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+              {{ employee.department?.name || 'N/A' }}
+            </td>
+            <td class="px-4 lg:px-6 py-4 whitespace-nowrap">
+              <span
+                class="badge text-xs"
+                [class.badge-success]="employee.status === 'active'"
+                [class.badge-warning]="employee.status === 'on_leave'"
+                [class.badge-danger]="employee.status === 'terminated'"
+              >
+                {{ employee.status }}
+              </span>
+            </td>
+            <td class="px-4 lg:px-6 py-4 whitespace-nowrap text-sm font-medium">
+              <div class="flex gap-2">
+                <button (click)="editEmployee(employee.id)" class="text-blue-600 hover:text-blue-900">
+                  Éditer
+                </button>
+                <button (click)="deleteEmployee(employee.id)" class="text-red-600 hover:text-red-900">
+                  Suppr.
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- Empty State for Desktop -->
+      <div *ngIf="employees.length === 0" class="text-center py-12">
+        <p class="text-gray-500">Aucun employé trouvé</p>
+        <button (click)="createEmployee()" class="mt-4 btn btn-primary">
+          Ajouter le premier employé
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Card View -->
+    <div class="md:hidden space-y-4 p-4">
+      <div 
+        *ngFor="let employee of employees" 
+        class="bg-white border border-gray-200 rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow"
+      >
+        <!-- Header: Avatar + Name + Status -->
+        <div class="flex items-center justify-between mb-3">
+          <div class="flex items-center gap-3">
+            <img
+              [src]="employee.avatar || 'https://ui-avatars.com/api/?name=' + employee.firstName + '+' + employee.lastName"
+              [alt]="employee.firstName + ' ' + employee.lastName"
+              class="w-12 h-12 rounded-full"
+            />
+            <div>
+              <h3 class="font-semibold text-gray-900">
+                {{ employee.firstName }} {{ employee.lastName }}
+              </h3>
+              <p class="text-sm text-gray-600">{{ employee.position }}</p>
+            </div>
+          </div>
+          <span
+            class="badge text-xs"
+            [class.badge-success]="employee.status === 'active'"
+            [class.badge-warning]="employee.status === 'on_leave'"
+            [class.badge-danger]="employee.status === 'terminated'"
+          >
+            {{ employee.status }}
+          </span>
+        </div>
+
+        <!-- Details -->
+        <div class="space-y-2 mb-3 text-sm">
+          <div class="flex items-center text-gray-600">
+            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+            </svg>
+            <span class="truncate">{{ employee.email }}</span>
+          </div>
+          <div *ngIf="employee.department" class="flex items-center text-gray-600">
+            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+            </svg>
+            {{ employee.department.name }}
+          </div>
+        </div>
+
+        <!-- Actions -->
+        <div class="flex gap-2 pt-3 border-t border-gray-100">
+          <button 
+            (click)="editEmployee(employee.id)" 
+            class="flex-1 px-3 py-2 bg-blue-50 text-blue-600 rounded-lg text-sm font-medium hover:bg-blue-100 transition-colors"
+          >
+            Éditer
+          </button>
+          <button 
+            (click)="deleteEmployee(employee.id)" 
+            class="flex-1 px-3 py-2 bg-red-50 text-red-600 rounded-lg text-sm font-medium hover:bg-red-100 transition-colors"
+          >
+            Supprimer
+          </button>
+        </div>
+      </div>
+
+      <!-- Empty State for Mobile -->
+      <div *ngIf="employees.length === 0" class="text-center py-12">
+        <p class="text-gray-500">Aucun employé trouvé</p>
+        <button (click)="createEmployee()" class="mt-4 btn btn-primary">
+          Ajouter le premier employé
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

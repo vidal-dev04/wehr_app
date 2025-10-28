@@ -1,0 +1,160 @@
+<div class="max-w-4xl mx-auto space-y-6">
+  <!-- Page Header -->
+  <div class="flex items-center justify-between">
+    <h1 class="text-3xl font-bold text-gray-900">
+      {{ isEditMode ? 'Modifier Employé' : 'Nouvel Employé' }}
+    </h1>
+  </div>
+
+  <!-- Form Card -->
+  <div class="card">
+    <form [formGroup]="employeeForm" (ngSubmit)="onSubmit()">
+      <!-- Personal Information -->
+      <div class="mb-8">
+        <h2 class="text-xl font-semibold text-gray-900 mb-4">Informations Personnelles</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <!-- First Name -->
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">
+              Prénom <span class="text-red-500">*</span>
+            </label>
+            <input type="text" formControlName="firstName" class="input" />
+            <div *ngIf="employeeForm.get('firstName')?.invalid && employeeForm.get('firstName')?.touched" class="text-red-500 text-sm mt-1">
+              Le prénom est requis
+            </div>
+          </div>
+
+          <!-- Last Name -->
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">
+              Nom <span class="text-red-500">*</span>
+            </label>
+            <input type="text" formControlName="lastName" class="input" />
+            <div *ngIf="employeeForm.get('lastName')?.invalid && employeeForm.get('lastName')?.touched" class="text-red-500 text-sm mt-1">
+              Le nom est requis
+            </div>
+          </div>
+
+          <!-- Email -->
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">
+              Email <span class="text-red-500">*</span>
+            </label>
+            <input type="email" formControlName="email" class="input" />
+            <div *ngIf="employeeForm.get('email')?.invalid && employeeForm.get('email')?.touched" class="text-red-500 text-sm mt-1">
+              Email valide requis
+            </div>
+          </div>
+
+          <!-- Phone -->
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Téléphone</label>
+            <input type="tel" formControlName="phone" class="input" />
+          </div>
+
+          <!-- Gender -->
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Genre</label>
+            <select formControlName="gender" class="input">
+              <option value="">Sélectionner</option>
+              <option value="male">Homme</option>
+              <option value="female">Femme</option>
+              <option value="other">Autre</option>
+            </select>
+          </div>
+
+          <!-- Date of Birth -->
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Date de Naissance</label>
+            <input type="date" formControlName="dateOfBirth" class="input" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Employment Information -->
+      <div class="mb-8">
+        <h2 class="text-xl font-semibold text-gray-900 mb-4">Informations Professionnelles</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <!-- Position -->
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">
+              Poste <span class="text-red-500">*</span>
+            </label>
+            <input type="text" formControlName="position" class="input" />
+            <div *ngIf="employeeForm.get('position')?.invalid && employeeForm.get('position')?.touched" class="text-red-500 text-sm mt-1">
+              Le poste est requis
+            </div>
+          </div>
+
+          <!-- Hire Date -->
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">
+              Date d'Embauche <span class="text-red-500">*</span>
+            </label>
+            <input type="date" formControlName="hireDate" class="input" />
+            <div *ngIf="employeeForm.get('hireDate')?.invalid && employeeForm.get('hireDate')?.touched" class="text-red-500 text-sm mt-1">
+              La date d'embauche est requise
+            </div>
+          </div>
+
+          <!-- Salary -->
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Salaire (€)</label>
+            <input type="number" formControlName="salary" class="input" />
+          </div>
+
+          <!-- Status -->
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Statut</label>
+            <select formControlName="status" class="input">
+              <option value="active">Actif</option>
+              <option value="inactive">Inactif</option>
+              <option value="on_leave">En Congé</option>
+              <option value="terminated">Terminé</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Address Information -->
+      <div class="mb-8">
+        <h2 class="text-xl font-semibold text-gray-900 mb-4">Adresse</h2>
+        <div class="grid grid-cols-1 gap-6">
+          <!-- Address -->
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Adresse</label>
+            <input type="text" formControlName="address" class="input" />
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- City -->
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-2">Ville</label>
+              <input type="text" formControlName="city" class="input" />
+            </div>
+
+            <!-- Country -->
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-2">Pays</label>
+              <input type="text" formControlName="country" class="input" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Form Actions -->
+      <div class="flex items-center justify-end space-x-4 pt-6 border-t">
+        <button type="button" (click)="cancel()" class="btn btn-secondary">
+          Annuler
+        </button>
+        <button
+          type="submit"
+          [disabled]="loading || employeeForm.invalid"
+          class="btn btn-primary disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          {{ loading ? 'Enregistrement...' : (isEditMode ? 'Mettre à jour' : 'Créer') }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
