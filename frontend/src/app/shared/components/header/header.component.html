@@ -47,17 +47,18 @@
       <div class="relative">
         <div class="flex items-center space-x-2 md:space-x-3 cursor-pointer" (click)="toggleProfileDropdown()">
           <!-- User info - Hidden on mobile, visible on md+ -->
+           <!-- Avatar -->
+          <img
+            src="assets/images/Mask Group.png"
+            alt="Profile"
+            class="w-8 h-8 md:w-10 md:h-10 rounded-full ring-2 ring-transparent hover:ring-blue-200 transition-all object-cover"
+          />
           <div class="hidden md:block text-right">
-            <p class="text-sm font-medium text-gray-900">Admira John</p>
+            <p class="text-sm font-medium text-gray-900">Tecleky Vidal</p>
             <p class="text-xs text-gray-500">Admin</p>
           </div>
           
-          <!-- Avatar -->
-          <img
-            src="https://ui-avatars.com/api/?name=Admira+John&background=3b82f6&color=fff"
-            alt="Profile"
-            class="w-8 h-8 md:w-10 md:h-10 rounded-full ring-2 ring-transparent hover:ring-blue-200 transition-all"
-          />
+          
           
           <!-- Dropdown Arrow -->
           <!-- <svg class="w-4 h-4 text-gray-600 transition-transform" [class.rotate-180]="showProfileDropdown" fill="none" stroke="currentColor" viewBox="0 0 24 24">

@@ -20,6 +20,14 @@ export class DashboardComponent implements OnInit {
     this.dashboardService.getDashboardStats().subscribe({
       next: (data) => {
         this.dashboardStats = data;
+        // Ajouter isPinned à chaque annonce si non présent
+        if (this.dashboardStats.announcements) {
+          this.dashboardStats.announcements = this.dashboardStats.announcements.map((ann: any) => ({
+            ...ann,
+            isPinned: ann.isPinned || false
+          }));
+          this.sortAnnouncements();
+        }
         this.loading = false;
       },
       error: (error) => {
@@ -27,6 +35,22 @@ export class DashboardComponent implements OnInit {
         this.loading = false;
       }
     });
+  }
+
+  togglePin(announcement: any): void {
+    announcement.isPinned = !announcement.isPinned;
+    this.sortAnnouncements();
+  }
+
+  sortAnnouncements(): void {
+    if (this.dashboardStats.announcements) {
+      this.dashboardStats.announcements.sort((a: any, b: any) => {
+        // Les annonces épinglées en premier
+        if (a.isPinned && !b.isPinned) return -1;
+        if (!a.isPinned && b.isPinned) return 1;
+        return 0;
+      });
+    }
   }
 
   getCurrentDateTime(): string {

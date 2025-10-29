@@ -101,11 +101,24 @@
             <span class="text-xs text-gray-500">Aujourd'hui</span>
           </div>
           <div class="space-y-3">
-            <div *ngFor="let announcement of dashboardStats.announcements" class="flex items-start justify-between pb-3 border-b border-gray-100 last:border-0 last:pb-0">
-              <div class="flex-1 pr-2">
+            <div *ngFor="let announcement of dashboardStats.announcements" class="flex items-start gap-3 pb-3 border-b border-gray-100 last:border-0 last:pb-0">
+              <div class="flex-1">
                 <p class="text-sm font-medium text-gray-900">{{ announcement.title }}</p>
                 <p class="text-xs text-gray-500 mt-1">{{ announcement.time }}</p>
               </div>
+              
+              <!-- Pin Icon -->
+              <button 
+                (click)="togglePin(announcement)"
+                class="flex-shrink-0 transition-colors"
+                [class.text-gray-400]="!announcement.isPinned"
+                [class.hover:text-gray-600]="!announcement.isPinned"
+                [class.text-gray-900]="announcement.isPinned">
+                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M16,12V4H17V2H7V4H8V12L6,14V16H11.2V22H12.8V16H18V14L16,12Z" />
+                </svg>
+              </button>
+              
               <button class="text-gray-400 hover:text-gray-600 flex-shrink-0">
                 <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                   <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z"/>
