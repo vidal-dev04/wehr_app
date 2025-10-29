@@ -7,10 +7,10 @@ installez les dependances suivantes (dans le dossier backend et frontend) :
 backend : npm install
 frontend : npm install
 
-Pour Lancer l'application il faut lancer le backend et le frontend :
+Pour Lancer l'application il faut lancer le backend et le frontend (dans des terminaux differents) :
 
-backend : npm run start:dev
-frontend : npm start
+backend : npm run start:dev (dans le dossier backend)
+frontend : npm start (dans le dossier frontend)
 
 La structure du projet est la suivante :
 
