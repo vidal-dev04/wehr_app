@@ -1,118 +1,51 @@
-# WeHR - Application de Gestion RH
+Wehr App
 
-Une application web complète de gestion des ressources humaines avec NestJS et Angular.
+Une application web complète de gestion des ressources humaines avec NestJS (Backend) et Angular (Frontend).
 
-## 🚀 Fonctionnalités
+installez les dependances suivantes (dans le dossier backend et frontend) :
 
-- **Dashboard** : Vue d'ensemble des statistiques RH
-- **Gestion des employés** : CRUD complet
-- **Gestion des départements** : Organisation des équipes
-- **Recrutement** : Suivi des positions ouvertes et candidatures
-- **Planning** : Gestion des horaires et événements
-- **Annonces** : Communication interne
-- **Authentification sécurisée** : JWT avec protection des données
-- **Interface responsive** : Desktop, Tablette, Mobile
+backend : npm install
+frontend : npm install
 
-## 📁 Structure du Projet
+Pour Lancer l'application il faut lancer le backend et le frontend :
 
-```
+backend : npm run start:dev
+frontend : npm start
+
+La structure du projet est la suivante :
+
 wehr-app/
-├── backend/          # API NestJS
-│   ├── src/
-│   │   ├── auth/     # Authentification JWT
-│   │   ├── employees/
-│   │   ├── departments/
-│   │   ├── jobs/
-│   │   ├── schedules/
-│   │   └── announcements/
-│   └── ...
-└── frontend/         # Application Angular
-    ├── src/
-    │   ├── app/
-    │   │   ├── components/
-    │   │   ├── services/
-    │   │   └── guards/
-    │   └── ...
-    └── ...
-```
+backend/ et ses dossiers src/ et node_modules/
+frontend/ et ses dossiers src/ et node_modules/
+.gitignore
+README.md
 
-## 🛠️ Technologies
+Technologies utilisées :
+ Backend : NestJS
+ Frontend : Angular
+ Base de données : PostgreSQL
+ Authentification : JWT
 
-### Backend
-- **NestJS** : Framework Node.js
-- **TypeORM** : ORM pour la base de données
-- **PostgreSQL** : Base de données
-- **JWT** : Authentification
-- **class-validator** : Validation des données
-- **bcrypt** : Hashage des mots de passe
+l'utilisateur peut effectuer les actions suivantes :
+ Se connecter
+ Se déconnecter
 
-### Frontend
-- **Angular 17+** : Framework frontend
-- **RxJS** : Gestion d'état réactive
-- **Angular Material** : Composants UI
-- **TailwindCSS** : Styling
-- **Chart.js** : Graphiques
+Voici les accès à l'application :
+login : admin@wehr.com
+password : password123
 
-## 🚀 Installation
+les menus fonctionnels sont les suivants :
+dashboard
+recrutement
+planning
+employés ( dans ce menu on peut ajouter, modifier, supprimer et consulter les employés)
+paramètres
 
-### Prérequis
-- Node.js >= 18
-- PostgreSQL >= 14
-- npm ou yarn
+Alors Pourquoi j'ai choisir NestJS comme Backend et Angular comme Frontend ?
 
-### Backend
+Car NestJS est un framework moderne et performant pour les applications backend, il est facile d'apprendre et d'utiliser et c'est le meilleur framework pour les applications backend Node.js et quant à Angular, tout simplement parce que c'est la technologie la plus utilisée pour les applications frontend 
 
-```bash
-cd backend
-npm install
-cp .env.example .env
-# Configurer les variables d'environnement
-npm run start:dev
-```
+ NestJS + Angular est le choix idéal pour une application RH professionnelle, scalable et maintenable. C'est la stack TypeScript complète pour les applications d'entreprise modernes. 
 
-### Frontend
 
-```bash
-cd frontend
-npm install
-npm start
-```
 
-## 📝 Variables d'Environnement
-
-Créer un fichier `.env` dans le dossier backend :
-
-```env
-DATABASE_HOST=localhost
-DATABASE_PORT=5432
-DATABASE_USER=postgres
-DATABASE_PASSWORD=your_password
-DATABASE_NAME=wehr_db
-JWT_SECRET=your_jwt_secret_key
-JWT_EXPIRES_IN=24h
-PORT=3000
-```
-
-## 🔒 Sécurité
-
-- Authentification JWT
-- Validation des entrées avec class-validator
-- Protection contre les injections SQL via TypeORM
-- Hashage des mots de passe avec bcrypt
-- Guards pour la protection des routes
-- CORS configuré
-
-## 📱 Responsive Design
-
-L'application est entièrement responsive et optimisée pour :
-- Desktop (1920px+)
-- Tablette (768px - 1024px)
-- Mobile (320px - 767px)
-
-## 👥 Auteurs
-
-Projet développé avec NestJS et Angular
-
-## 📄 Licence
-
-MIT
