@@ -1,16 +1,17 @@
-<div class="p-6 bg-gray-50 min-h-screen">
+<div class="p-4 sm:p-6 bg-gray-50 min-h-screen">
   <!-- Header -->
-  <div class="flex items-center justify-between mb-6">
+  <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
     <div>
-      <h1 class="text-2xl font-bold text-gray-900">Planning</h1>
+      <h1 class="text-xl sm:text-2xl font-bold text-gray-900">Planning</h1>
       <p class="text-sm text-gray-500 mt-1">Gérez vos événements et rendez-vous</p>
     </div>
     
-    <button class="flex items-center gap-2 bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition-colors">
+    <button class="flex items-center gap-2 bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition-colors whitespace-nowrap">
       <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
       </svg>
-      Nouvel Événement
+      <span class="hidden sm:inline">Nouvel Événement</span>
+      <span class="sm:hidden">Nouveau</span>
     </button>
   </div>
 

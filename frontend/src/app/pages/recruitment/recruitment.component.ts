@@ -34,73 +34,14 @@ export class RecruitmentComponent implements OnInit {
   ];
 
   candidates: Candidate[] = [
+    
     {
       id: 1,
-      name: 'Marie Dubois',
-      position: 'Développeur Full Stack',
-      email: 'marie.dubois@email.com',
-      phone: '+33 6 12 34 56 78',
-      experience: '5 ans',
-      avatar: 'https://ui-avatars.com/api/?name=Marie+Dubois&background=3b82f6&color=fff',
-      score: 92,
-      appliedDate: '2025-03-20',
-      status: 'nouveau'
-    },
-    {
-      id: 2,
-      name: 'Thomas Martin',
-      position: 'Designer UX/UI',
-      email: 'thomas.martin@email.com',
-      phone: '+33 6 23 45 67 89',
+      name: 'Tecleky Vidal',
+      position: 'Dev Full Stack',
+      email: 'vidaldev@gmail.com',
+      phone: '0748280092',
       experience: '3 ans',
-      avatar: 'https://ui-avatars.com/api/?name=Thomas+Martin&background=8b5cf6&color=fff',
-      score: 88,
-      appliedDate: '2025-03-19',
-      status: 'revision'
-    },
-    {
-      id: 3,
-      name: 'Sophie Bernard',
-      position: 'Chef de Projet IT',
-      email: 'sophie.bernard@email.com',
-      phone: '+33 6 34 56 78 90',
-      experience: '7 ans',
-      avatar: 'https://ui-avatars.com/api/?name=Sophie+Bernard&background=ec4899&color=fff',
-      score: 95,
-      appliedDate: '2025-03-18',
-      status: 'entretien'
-    },
-    {
-      id: 4,
-      name: 'Lucas Petit',
-      position: 'Data Scientist',
-      email: 'lucas.petit@email.com',
-      phone: '+33 6 45 67 89 01',
-      experience: '4 ans',
-      avatar: 'https://ui-avatars.com/api/?name=Lucas+Petit&background=10b981&color=fff',
-      score: 90,
-      appliedDate: '2025-03-17',
-      status: 'offre'
-    },
-    {
-      id: 5,
-      name: 'Emma Laurent',
-      position: 'Développeur Frontend',
-      email: 'emma.laurent@email.com',
-      phone: '+33 6 56 78 90 12',
-      experience: '3 ans',
-      avatar: 'https://ui-avatars.com/api/?name=Emma+Laurent&background=f59e0b&color=fff',
-      score: 85,
-      appliedDate: '2025-03-22',
-      status: 'nouveau'
-    },
-    {
-      id: 6,
-      name: 'Alexandre Roux',
-      position: 'DevOps Engineer',
-      email: 'alex.roux@email.com',
-      phone: '+33 6 67 89 01 23',
-      experience: '6 ans',
       avatar: 'https://ui-avatars.com/api/?name=Alexandre+Roux&background=ef4444&color=fff',
       score: 93,
       appliedDate: '2025-03-16',

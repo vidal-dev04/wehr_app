@@ -1,6 +1,6 @@
 <div class="space-y-4">
   <!-- Page Title -->
-  <h1 class="text-2xl font-bold text-gray-900">Dashboard</h1>
+  <h1 class="text-xl sm:text-2xl font-bold text-gray-900">Dashboard</h1>
 
   <!-- Loading State -->
   <div *ngIf="loading" class="flex items-center justify-center h-64">
@@ -15,7 +15,7 @@
       <!-- Left Column -->
       <div class="space-y-3">
         <!-- Small Cards Row -->
-        <div class="grid grid-cols-3 gap-3">
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
           <!-- Available Position Card -->
           <div class="bg-red-50 border border-red-200 rounded-xl p-3">
             <p class="text-xs text-gray-600 mb-1">Positions Disponibles</p>
@@ -39,7 +39,7 @@
         </div>
 
         <!-- Employee Stats Cards -->
-        <div class="grid grid-cols-2 gap-3">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
         <!-- Total Employees Card -->
         <div class="bg-white rounded-xl border border-gray-200 p-3">
           <p class="text-xs text-gray-600 mb-1">Employés Totaux</p>
