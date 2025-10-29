@@ -8,62 +8,38 @@
   </div>
 
   <!-- Dashboard Content -->
-  <div *ngIf="!loading && dashboardStats" class="space-y-3">
+  <div *ngIf="!loading && dashboardStats">
     
-    <!-- Stats Cards Row 1 -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-[auto_auto_auto_1fr] gap-4 items-start">
-      <!-- Available Position Card -->
-      <div class="bg-red-50 border border-red-200 rounded-xl p-3 w-fit">
-        <p class="text-xs text-gray-600 mb-1">Positions Disponibles</p>
-        <h3 class="text-2xl font-bold text-gray-900 mb-1">{{ dashboardStats.availablePositions?.total || 0 }}</h3>
-        <p class="text-xs text-red-600">{{ dashboardStats.availablePositions?.urgentlyNeeded || 0 }} Urgent</p>
-      </div>
-
-      <!-- Job Open Card -->
-      <div class="bg-blue-50 border border-blue-200 rounded-xl p-3 w-fit">
-        <p class="text-xs text-gray-600 mb-1">Offres Ouvertes</p>
-        <h3 class="text-2xl font-bold text-gray-900 mb-1">{{ dashboardStats.jobsOpen?.total || 0 }}</h3>
-        <p class="text-xs text-blue-600">{{ dashboardStats.jobsOpen?.activeHiring || 0 }} Actif</p>
-      </div>
-
-      <!-- New Employees Card -->
-      <div class="bg-pink-50 border border-pink-200 rounded-xl p-3 w-fit">
-        <p class="text-xs text-gray-600 mb-1">Nouveaux Employés</p>
-        <h3 class="text-2xl font-bold text-gray-900 mb-1">{{ dashboardStats.newEmployees?.total || 0 }}</h3>
-        <p class="text-xs text-pink-600">{{ dashboardStats.newEmployees?.departmentCount || 0 }} Départements</p>
-      </div>
-
-      <!-- Recently Activity Card -->
-      <div class="bg-gradient-to-br from-indigo-900 to-indigo-800 text-white rounded-xl p-4 flex flex-col justify-between">
-        <div>
-          <div class="flex items-center justify-between mb-2">
-            <p class="text-xs text-indigo-300">Activité Récente</p>
-            <p class="text-xs text-indigo-300">{{ getCurrentDateTime() }}</p>
+    <!-- Main Layout: 2 Columns -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+      <!-- Left Column -->
+      <div class="space-y-3">
+        <!-- Small Cards Row -->
+        <div class="grid grid-cols-3 gap-3">
+          <!-- Available Position Card -->
+          <div class="bg-red-50 border border-red-200 rounded-xl p-3">
+            <p class="text-xs text-gray-600 mb-1">Positions Disponibles</p>
+            <h3 class="text-2xl font-bold text-gray-900 mb-1">{{ dashboardStats.availablePositions?.total || 0 }}</h3>
+            <p class="text-xs text-red-600">{{ dashboardStats.availablePositions?.urgentlyNeeded || 0 }} Urgent</p>
           </div>
-          
-          <h4 class="text-base font-bold mb-2 leading-tight">
-            Vous Avez Publié un Nouveau Poste
-          </h4>
-          
-          <p class="text-xs text-indigo-200 mb-2 leading-relaxed">
-            Veuillez vérifier les exigences et les conditions de travail et assurez-vous que tout est correct.
-          </p>
-          
-          <p class="text-xs text-indigo-300 mb-3">
-            Aujourd'hui vous avez 12 activités
-          </p>
-        </div>
-        
-        <button class="bg-red-500 text-white px-3 py-2 rounded-lg text-xs font-semibold hover:bg-red-600 transition-colors w-full">
-          Voir Toutes les Activités
-        </button>
-      </div>
-    </div>
 
-    <!-- Stats Cards Row 2 -->
-    <div class="grid grid-cols-1 lg:grid-cols-6 gap-3 items-start">
-      <!-- Left Section - Stats Cards -->
-      <div class="lg:col-span-3 grid grid-cols-1 md:grid-cols-2 gap-4">
+          <!-- Job Open Card -->
+          <div class="bg-blue-50 border border-blue-200 rounded-xl p-3">
+            <p class="text-xs text-gray-600 mb-1">Offres Ouvertes</p>
+            <h3 class="text-2xl font-bold text-gray-900 mb-1">{{ dashboardStats.jobsOpen?.total || 0 }}</h3>
+            <p class="text-xs text-blue-600">{{ dashboardStats.jobsOpen?.activeHiring || 0 }} Actif</p>
+          </div>
+
+          <!-- New Employees Card -->
+          <div class="bg-pink-50 border border-pink-200 rounded-xl p-3">
+            <p class="text-xs text-gray-600 mb-1">Nouveaux Employés</p>
+            <h3 class="text-2xl font-bold text-gray-900 mb-1">{{ dashboardStats.newEmployees?.total || 0 }}</h3>
+            <p class="text-xs text-pink-600">{{ dashboardStats.newEmployees?.departmentCount || 0 }} Départements</p>
+          </div>
+        </div>
+
+        <!-- Employee Stats Cards -->
+        <div class="grid grid-cols-2 gap-3">
         <!-- Total Employees Card -->
         <div class="bg-white rounded-xl border border-gray-200 p-3">
           <p class="text-xs text-gray-600 mb-1">Employés Totaux</p>
@@ -116,10 +92,61 @@
             </div>
           </div>
         </div>
+        </div>
+
+        <!-- Announcements -->
+        <div class="bg-white rounded-xl border border-gray-200 p-4">
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="text-base font-semibold text-gray-900">Annonces</h3>
+            <span class="text-xs text-gray-500">Aujourd'hui</span>
+          </div>
+          <div class="space-y-3">
+            <div *ngFor="let announcement of dashboardStats.announcements" class="flex items-start justify-between pb-3 border-b border-gray-100 last:border-0 last:pb-0">
+              <div class="flex-1 pr-2">
+                <p class="text-sm font-medium text-gray-900">{{ announcement.title }}</p>
+                <p class="text-xs text-gray-500 mt-1">{{ announcement.time }}</p>
+              </div>
+              <button class="text-gray-400 hover:text-gray-600 flex-shrink-0">
+                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+          <button class="w-full mt-4 text-center text-red-600 text-sm font-medium hover:text-red-700 transition-colors">
+            Voir Toutes les Annonces
+          </button>
+        </div>
       </div>
 
-      <!-- Right Section - Planning -->
-      <div class="lg:col-span-3">
+      <!-- Right Column -->
+      <div class="space-y-3">
+        <!-- Recently Activity Card -->
+        <div class="bg-gradient-to-br from-indigo-900 to-indigo-800 text-white rounded-xl p-4 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <p class="text-xs text-indigo-300">Activité Récente</p>
+              <p class="text-xs text-indigo-300">{{ getCurrentDateTime() }}</p>
+            </div>
+            
+            <h4 class="text-base font-bold mb-2 leading-tight">
+              Vous Avez Publié un Nouveau Poste
+            </h4>
+            
+            <p class="text-xs text-indigo-200 mb-2 leading-relaxed">
+              Veuillez vérifier les exigences et les conditions de travail et assurez-vous que tout est correct.
+            </p>
+            
+            <p class="text-xs text-indigo-300 mb-3">
+              Aujourd'hui vous avez 12 activités
+            </p>
+          </div>
+          
+          <button class="bg-red-500 text-white px-3 py-2 rounded-lg text-xs font-semibold hover:bg-red-600 transition-colors w-full">
+            Voir Toutes les Activités
+          </button>
+        </div>
+
         <!-- Upcoming Schedule -->
         <div class="bg-white rounded-xl border border-gray-200 p-4">
           <div class="flex items-center justify-between mb-4">
@@ -144,58 +171,6 @@
             Créer Nouveau Planning
           </button>
         </div>
-      </div>
-    </div>
-
-    <!-- Announcements & Schedule -->
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 items-start">
-      <!-- Announcements -->
-      <div class="bg-white rounded-xl border border-gray-200 p-4">
-        <div class="flex items-center justify-between mb-4">
-          <h3 class="text-base font-semibold text-gray-900">Annonces</h3>
-          <span class="text-xs text-gray-500">Aujourd'hui</span>
-        </div>
-        <div class="space-y-3">
-          <div *ngFor="let announcement of dashboardStats.announcements" class="flex items-start justify-between pb-3 border-b border-gray-100 last:border-0 last:pb-0">
-            <div class="flex-1 pr-2">
-              <p class="text-sm font-medium text-gray-900">{{ announcement.title }}</p>
-              <p class="text-xs text-gray-500 mt-1">{{ announcement.time }}</p>
-            </div>
-            <button class="text-gray-400 hover:text-gray-600 flex-shrink-0">
-              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z"/>
-              </svg>
-            </button>
-          </div>
-        </div>
-        <button class="w-full mt-4 text-center text-red-600 text-sm font-medium hover:text-red-700 transition-colors">
-          Voir Toutes les Annonces
-        </button>
-      </div>
-
-      <!-- Upcoming Schedule -->
-      <div class="bg-white rounded-xl border border-gray-200 p-4">
-        <div class="flex items-center justify-between mb-4">
-          <h3 class="text-base font-semibold text-gray-900">Planning à Venir</h3>
-          <span class="text-xs text-gray-500">Aujourd'hui</span>
-        </div>
-        <div class="space-y-3">
-          <div *ngFor="let schedule of dashboardStats.upcomingSchedules" class="flex items-start justify-between pb-3 border-b border-gray-100 last:border-0 last:pb-0">
-            <div class="flex-1 pr-2">
-              <span class="inline-block px-2 py-1 text-xs rounded bg-gray-100 text-gray-700 mb-2">{{ schedule.priority }}</span>
-              <p class="text-sm font-medium text-gray-900">{{ schedule.title }}</p>
-              <p class="text-xs text-gray-500 mt-1">{{ schedule.time }}</p>
-            </div>
-            <button class="text-gray-400 hover:text-gray-600 flex-shrink-0">
-              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z"/>
-              </svg>
-            </button>
-          </div>
-        </div>
-        <button class="w-full mt-4 text-center text-red-600 text-sm font-medium hover:text-red-700 transition-colors">
-          Créer Nouveau Planning
-        </button>
       </div>
     </div>
   </div>
