@@ -82,36 +82,62 @@
         <!-- Total Employees Card -->
         <div class="bg-white rounded-xl border border-gray-200 p-4">
           <div class="flex items-start justify-between mb-3">
-            <div>
-              <p class="text-xs text-gray-600">Employés Totaux</p>
+            <div class="flex-1">
+              <p class="text-xs text-gray-600 mb-1">Employés Totaux</p>
               <h3 class="text-3xl font-bold text-gray-900">{{ dashboardStats.totalEmployees?.total || 0 }}</h3>
+              <div class="flex items-center space-x-4 text-xs text-gray-600 mt-2">
+                <div>
+                  <span>{{ dashboardStats.totalEmployees?.men || 0 }} Hommes</span>
+                </div>
+                <div>
+                  <span>{{ dashboardStats.totalEmployees?.women || 0 }} Femmes</span>
+                </div>
+              </div>
             </div>
-            <div class="text-green-600 text-sm font-semibold">+{{ dashboardStats.totalEmployees?.changePercentage || 0 }}%</div>
-          </div>
-          <div class="flex items-center space-x-4 text-xs text-gray-600">
-            <div>
-              <span>{{ dashboardStats.totalEmployees?.men || 0 }} Hommes</span>
-            </div>
-            <div>
-              <span>{{ dashboardStats.totalEmployees?.women || 0 }} Femmes</span>
+            <div class="flex flex-col items-end">
+              <!-- Line Chart -->
+              <svg class="w-20 h-12 mb-1" viewBox="0 0 80 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M0 40 L20 35 L40 25 L60 20 L80 10" stroke="#ef4444" stroke-width="2" fill="none"/>
+                <path d="M0 40 L20 35 L40 25 L60 20 L80 10 L80 48 L0 48 Z" fill="url(#gradient1)" fill-opacity="0.1"/>
+                <defs>
+                  <linearGradient id="gradient1" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="#ef4444"/>
+                    <stop offset="100%" stop-color="#ef4444" stop-opacity="0"/>
+                  </linearGradient>
+                </defs>
+              </svg>
+              <span class="text-xs text-red-600 font-semibold">+{{ dashboardStats.totalEmployees?.changePercentage || 0 }}% Mois dernier</span>
             </div>
           </div>
         </div>
         <!-- Talent Requests Card -->
         <div class="bg-white rounded-xl border border-gray-200 p-4">
           <div class="flex items-start justify-between mb-3">
-            <div>
-              <p class="text-xs text-gray-600">Demandes de Talents</p>
+            <div class="flex-1">
+              <p class="text-xs text-gray-600 mb-1">Demandes de Talents</p>
               <h3 class="text-3xl font-bold text-gray-900">{{ dashboardStats.talentRequests?.total || 0 }}</h3>
+              <div class="flex items-center space-x-4 text-xs text-gray-600 mt-2">
+                <div>
+                  <span>{{ dashboardStats.talentRequests?.men || 0 }} Hommes</span>
+                </div>
+                <div>
+                  <span>{{ dashboardStats.talentRequests?.women || 0 }} Femmes</span>
+                </div>
+              </div>
             </div>
-            <div class="text-green-600 text-sm font-semibold">+{{ dashboardStats.talentRequests?.changePercentage || 0 }}%</div>
-          </div>
-          <div class="flex items-center space-x-4 text-xs text-gray-600">
-            <div>
-              <span>{{ dashboardStats.talentRequests?.men || 0 }} Hommes</span>
-            </div>
-            <div>
-              <span>{{ dashboardStats.talentRequests?.women || 0 }} Femmes</span>
+            <div class="flex flex-col items-end">
+              <!-- Line Chart -->
+              <svg class="w-20 h-12 mb-1" viewBox="0 0 80 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M0 38 L20 32 L40 28 L60 22 L80 12" stroke="#ef4444" stroke-width="2" fill="none"/>
+                <path d="M0 38 L20 32 L40 28 L60 22 L80 12 L80 48 L0 48 Z" fill="url(#gradient2)" fill-opacity="0.1"/>
+                <defs>
+                  <linearGradient id="gradient2" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="#ef4444"/>
+                    <stop offset="100%" stop-color="#ef4444" stop-opacity="0"/>
+                  </linearGradient>
+                </defs>
+              </svg>
+              <span class="text-xs text-red-600 font-semibold">+{{ dashboardStats.talentRequests?.changePercentage || 0 }}% Mois dernier</span>
             </div>
           </div>
         </div>
