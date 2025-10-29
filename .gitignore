@@ -1,0 +1,26 @@
+# Dossiers à ignorer
+node_modules/
+dist/
+.angular/
+*.log
+
+# Frontend spécifiques
+frontend/node_modules/
+frontend/.angular/
+frontend/dist/
+frontend/.sass-cache/
+
+# Backend spécifiques
+backend/node_modules/
+backend/dist/
+
+# Fichiers système
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+# IDE
+.vscode/
+.idea/
+*.sublime-*
