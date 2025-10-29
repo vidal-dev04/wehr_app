@@ -2,6 +2,9 @@ Wehr App
 
 Une application web complète de gestion des ressources humaines avec NestJS (Backend) et Angular (Frontend).
 
+Mon Projet se trouve sur git , le nom de la branche est "vidal".
+Le nom de la repository est "wehr_app".
+
 installez les dependances suivantes (dans le dossier backend et frontend) :
 
 backend : npm install
