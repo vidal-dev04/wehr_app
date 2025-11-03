@@ -1,0 +1,60 @@
+version: '3.8'
+
+services:
+  # Backend NestJS
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: wehr-backend
+    ports:
+      - "3000:3000"
+    environment:
+      # Database Neon (cloud)
+      DATABASE_URL: ${DATABASE_URL}
+      
+      # JWT Configuration
+      JWT_SECRET: ${JWT_SECRET}
+      JWT_EXPIRES_IN: ${JWT_EXPIRES_IN}
+      
+      # Application
+      PORT: 3000
+      NODE_ENV: production
+      
+      # CORS
+      CORS_ORIGIN: http://localhost
+    restart: unless-stopped
+    networks:
+      - wehr-network
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:3000/api"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Frontend Angular
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: wehr-frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    restart: unless-stopped
+    networks:
+      - wehr-network
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:80"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+networks:
+  wehr-network:
+    driver: bridge
+
+# Volumes (si nécessaire pour la persistance)
+volumes:
+  backend-data:
