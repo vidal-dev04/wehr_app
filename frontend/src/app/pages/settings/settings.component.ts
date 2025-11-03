@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { UserManagementService, User as MgmtUser, CreateUserRequest } from '../../core/services/user-management.service';
+import { AuthService } from '../../core/services/auth.service';
 
 @Component({
   selector: 'app-settings',
@@ -10,7 +12,21 @@ import { FormsModule } from '@angular/forms';
   styleUrls: ['./settings.component.scss']
 })
 export class SettingsComponent implements OnInit {
-  activeTab: 'profile' | 'company' | 'notifications' | 'security' | 'integrations' = 'profile';
+  activeTab: 'profile' | 'company' | 'notifications' | 'security' | 'integrations' | 'users' = 'profile';
+  
+  // User Management
+  users: MgmtUser[] = [];
+  loadingUsers = false;
+  createUserForm: CreateUserRequest = {
+    email: '',
+    username: '',
+    role: 'employee'
+  };
+  creatingUser = false;
+  createUserMessage = '';
+  createUserError = '';
+  createdUserPassword = '';
+  showPasswordCopied = false;
   
   // Profile Settings
   profileSettings = {
@@ -60,7 +76,138 @@ export class SettingsComponent implements OnInit {
   theme: 'light' | 'dark' | 'auto' = 'light';
   language: string = 'fr';
 
-  ngOnInit(): void {}
+  constructor(
+    private userManagementService: UserManagementService,
+    private authService: AuthService
+  ) {}
+
+  ngOnInit(): void {
+    this.loadUsers();
+  }
+
+  loadUsers(): void {
+    this.loadingUsers = true;
+    this.userManagementService.getAllUsers().subscribe({
+      next: (users) => {
+        this.users = users;
+        this.loadingUsers = false;
+      },
+      error: (error) => {
+        console.error('Erreur lors du chargement des utilisateurs:', error);
+        this.loadingUsers = false;
+      }
+    });
+  }
+
+  getUserStatus(user: MgmtUser): string {
+    if (!user.isActive) return 'Inactif';
+    if (user.isTemporaryPassword) return 'En attente';
+    return 'Actif';
+  }
+
+  getStatusClass(user: MgmtUser): string {
+    if (!user.isActive) return 'bg-gray-100 text-gray-800';
+    if (user.isTemporaryPassword) return 'bg-yellow-100 text-yellow-800';
+    return 'bg-green-100 text-green-800';
+  }
+
+  createUser(): void {
+    this.createUserMessage = '';
+    this.createUserError = '';
+    this.createdUserPassword = '';
+
+    if (!this.createUserForm.email || !this.createUserForm.username) {
+      this.createUserError = 'Veuillez remplir tous les champs';
+      return;
+    }
+
+    this.creatingUser = true;
+    this.userManagementService.createUserWithTempPassword(this.createUserForm).subscribe({
+      next: (response) => {
+        this.creatingUser = false;
+        if (response.success) {
+          this.createUserMessage = response.message;
+          this.createdUserPassword = response.temporaryPassword || '';
+          
+          // Réinitialiser le formulaire
+          this.createUserForm = {
+            email: '',
+            username: '',
+            role: 'employee'
+          };
+          // Recharger la liste
+          this.loadUsers();
+          
+          // Masquer le message après 30 secondes (pour laisser le temps de copier)
+          setTimeout(() => {
+            this.createUserMessage = '';
+            this.createdUserPassword = '';
+          }, 30000);
+        } else {
+          this.createUserError = response.message;
+        }
+      },
+      error: (error) => {
+        this.creatingUser = false;
+        this.createUserError = error.error?.message || 'Une erreur est survenue';
+      }
+    });
+  }
+
+  copyPassword(): void {
+    if (this.createdUserPassword) {
+      navigator.clipboard.writeText(this.createdUserPassword).then(() => {
+        this.showPasswordCopied = true;
+        setTimeout(() => {
+          this.showPasswordCopied = false;
+        }, 2000);
+      }).catch(err => {
+        console.error('Erreur lors de la copie:', err);
+      });
+    }
+  }
+
+  getUserDisplayName(user: MgmtUser): string {
+    // Si l'utilisateur a un username, l'utiliser
+    if (user.username) {
+      return user.username;
+    }
+    // Sinon, extraire la partie avant @ de l'email
+    return user.email.split('@')[0];
+  }
+
+  deleteUser(userId: string, username: string): void {
+    if (confirm(`Êtes-vous sûr de vouloir supprimer l'utilisateur "${username}" ? Cette action est irréversible.`)) {
+      this.userManagementService.deleteUser(userId).subscribe({
+        next: (response) => {
+          if (response.success) {
+            // Afficher un message de succès temporaire
+            this.createUserMessage = response.message;
+            this.createdUserPassword = '';
+            
+            // Recharger la liste des utilisateurs
+            this.loadUsers();
+            
+            // Masquer le message après 3 secondes
+            setTimeout(() => {
+              this.createUserMessage = '';
+            }, 3000);
+          } else {
+            this.createUserError = response.message;
+            setTimeout(() => {
+              this.createUserError = '';
+            }, 3000);
+          }
+        },
+        error: (error) => {
+          this.createUserError = error.error?.message || 'Une erreur est survenue lors de la suppression';
+          setTimeout(() => {
+            this.createUserError = '';
+          }, 3000);
+        }
+      });
+    }
+  }
 
   saveProfile(): void {
     console.log('Profil sauvegardé:', this.profileSettings);

@@ -8,7 +8,9 @@ import { RecruitmentComponent } from './pages/recruitment/recruitment.component'
 import { PlanningComponent } from './pages/planning/planning.component';
 import { SettingsComponent } from './pages/settings/settings.component';
 import { LoginComponent } from './pages/auth/login/login.component';
+import { ChangePasswordComponent } from './pages/change-password/change-password.component';
 import { AuthGuard } from './core/guards/auth.guard';
+import { TemporaryPasswordGuard } from './core/guards/temporary-password.guard';
 
 const routes: Routes = [
   {
@@ -16,9 +18,14 @@ const routes: Routes = [
     component: LoginComponent
   },
   {
+    path: 'change-password',
+    component: ChangePasswordComponent,
+    canActivate: [AuthGuard, TemporaryPasswordGuard]
+  },
+  {
     path: '',
     component: MainLayoutComponent,
-    canActivate: [AuthGuard],
+    canActivate: [AuthGuard, TemporaryPasswordGuard],
     children: [
       {
         path: '',

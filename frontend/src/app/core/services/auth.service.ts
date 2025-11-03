@@ -8,7 +8,9 @@ import { environment } from '../../../environments/environment';
 export interface User {
   id: string;
   email: string;
+  username?: string;
   role: string;
+  isTemporaryPassword?: boolean;
 }
 
 export interface AuthResponse {
@@ -71,5 +73,23 @@ export class AuthService {
 
   isAuthenticated(): boolean {
     return !!this.getToken();
+  }
+
+  changePassword(newPassword: string): Observable<any> {
+    return this.http.post(`${environment.apiUrl}/auth/change-password`, { newPassword })
+      .pipe(map(response => {
+        // Mettre à jour l'utilisateur courant pour retirer le flag temporaire
+        const currentUser = this.currentUserValue;
+        if (currentUser) {
+          currentUser.isTemporaryPassword = false;
+          localStorage.setItem('currentUser', JSON.stringify(currentUser));
+          this.currentUserSubject.next(currentUser);
+        }
+        return response;
+      }));
+  }
+
+  hasTemporaryPassword(): boolean {
+    return this.currentUserValue?.isTemporaryPassword === true;
   }
 }

@@ -25,7 +25,7 @@ export class LoginComponent {
     }
 
     this.loginForm = this.formBuilder.group({
-      email: ['', [Validators.required, Validators.email]],
+      email: ['', [Validators.required]],  // Accepte email OU username
       password: ['', [Validators.required, Validators.minLength(6)]]
     });
 
@@ -50,7 +50,7 @@ export class LoginComponent {
           this.router.navigate([this.returnUrl]);
         },
         error: (error) => {
-          this.error = error.error?.message || 'Email ou mot de passe incorrect';
+          this.error = error.error?.message || 'Identifiant ou mot de passe incorrect';
           this.loading = false;
         }
       });

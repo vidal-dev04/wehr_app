@@ -39,6 +39,12 @@ export class User {
   @Column({ default: true })
   isActive: boolean;
 
+  @Column({ default: false })
+  isTemporaryPassword: boolean;
+
+  @Column({ nullable: true })
+  username: string;
+
   @OneToOne(() => Employee, (employee) => employee.user, { nullable: true })
   @JoinColumn()
   employee: Employee;
