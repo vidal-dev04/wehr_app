@@ -1,242 +1,309 @@
-# 🏢 WeHR - Application de Gestion RH
 
-Une application web complète de gestion des ressources humaines développée avec **NestJS** (Backend) et **Angular** (Frontend).
+Wehr App
 
-[![NestJS](https://img.shields.io/badge/NestJS-E0234E?style=flat&logo=nestjs&logoColor=white)](https://nestjs.com/)
-[![Angular](https://img.shields.io/badge/Angular-DD0031?style=flat&logo=angular&logoColor=white)](https://angular.io/)
-[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-316192?style=flat&logo=postgresql&logoColor=white)](https://www.postgresql.org/)
-[![Docker](https://img.shields.io/badge/Docker-2496ED?style=flat&logo=docker&logoColor=white)](https://www.docker.com/)
+Une application web complète de gestion des ressources humaines avec NestJS (Backend) et Angular (Frontend).
 
----
+Mon Projet se trouve sur git , le nom de la branche est "vidal".
+Le nom de la repository est "wehr_app".
 
-## 📖 Table des Matières
+NB : Pour Se connecter
 
-- [Démarrage Rapide](#-démarrage-rapide)
-  - [Option 1 : Avec Docker (Recommandé)](#option-1--avec-docker-recommandé)
-  - [Option 2 : Installation Classique](#option-2--installation-classique-sans-docker)
-- [Structure du Projet](#-structure-du-projet)
-- [Technologies Utilisées](#️-technologies-utilisées)
-- [Fonctionnalités](#-fonctionnalités)
-- [Pourquoi NestJS + Angular ?](#-pourquoi-nestjs--angular-)
-- [Documentation Supplémentaire](#-documentation-supplémentaire)
-- [Auteur](#-auteur)
-
----
-
-
-## 🚀 Démarrage Rapide
-
-### **Option 1 : Avec Docker (Recommandé)**
-
-La façon la plus simple de lancer l'application est d'utiliser Docker. Tout est configuré et prêt à fonctionner !
-
-#### **Prérequis**
-- Docker Desktop installé ([Télécharger ici](https://www.docker.com/products/docker-desktop/))
-- Les fichiers `.env` configurés (voir section Configuration ci-dessous)
-
-#### **Configuration**
-1. Copiez le fichier d'exemple :
-```bash
-copy .env.docker .env
-```
-
-2. Éditez le fichier `.env` et ajoutez votre connection string Neon :
-```env
-DATABASE_URL=postgresql://votre_connection_string_neon_ici
-JWT_SECRET=your_super_secret_jwt_key_change_this_in_production
-JWT_EXPIRES_IN=24h
-```
-
-#### **Lancement**
-```bash
-# Build les images Docker
-docker-compose build
-
-# Lancer l'application
-docker-compose up -d
-
-# Vérifier que tout tourne
-docker-compose ps
-```
-
-#### **Accès à l'application**
-- **Frontend** : http://localhost
-- **Backend API** : http://localhost:3000/api
-
-#### **Identifiants par défaut**
 - **Username** : `admin`
 - **Password** : `password`
 
-#### **Commandes utiles**
-```bash
-# Voir les logs en temps réel
+La structure du projet est la suivante :
+
+wehr-app/
+backend/ et ses dossiers src/ et node_modules/
+frontend/ et ses dossiers src/ et node_modules/
+.gitignore
+README.md
+
+Technologies utilisées :
+ Backend : NestJS
+ Frontend : Angular
+ Base de données : PostgreSQL
+ Authentification : JWT
+
+l'utilisateur peut effectuer les actions suivantes :
+ Se connecter
+ Se déconnecter
+
+
+les menus fonctionnels sont les suivants :
+dashboard
+recrutement
+planning
+employés ( dans ce menu on peut ajouter, modifier, supprimer et consulter les employés)
+paramètres ( possibilité d'ajouter un user , il recoit un code temporaire , il peut changer son mot de passe , et apres il peut se connecter sur l'application)
+
+Alors Pourquoi j'ai choisir NestJS comme Backend et Angular comme Frontend ?
+
+Car NestJS est un framework moderne et performant pour les applications backend, il est facile d'apprendre et d'utiliser et c'est le meilleur framework pour les applications backend Node.js et quant à Angular, tout simplement parce que c'est la technologie la plus utilisée pour les applications frontend 
+
+ NestJS + Angular est le choix idéal pour une application RH professionnelle, scalable et maintenable. C'est la stack TypeScript complète pour les applications d'entreprise modernes. 
+
+ # Guide Docker pour WeHR
+
+Ce guide explique comment installer Docker et déployer l'application WeHR avec Docker.
+
+---
+
+## Prérequis
+
+- Docker Desktop installé (Windows)
+- Git (pour cloner le projet)
+- Les fichiers `.env` configurés
+
+---
+
+## 1. Installation de Docker Desktop
+
+### Télécharger Docker Desktop
+
+1. Allez sur : **https://www.docker.com/products/docker-desktop/**
+2. Cliquez sur **Download for Windows**
+3. Téléchargez l'installateur
+
+### Installer Docker Desktop
+
+1. Lancez l'installateur téléchargé
+2. Suivez l'assistant d'installation
+3. **Cochez** "Use WSL 2 instead of Hyper-V" (recommandé)
+4. Cliquez sur **Install**
+5. **Redémarrez** votre ordinateur si demandé
+
+### Vérifier l'installation
+
+Ouvrez PowerShell et testez :
+
+```powershell
+docker --version
+docker-compose --version
+```
+
+Vous devriez voir les versions installées.
+
+---
+
+## 2. Configuration du projet
+
+### Étape 1 : Préparer le fichier .env
+
+Copiez le fichier `.env.docker` vers `.env` à la racine du projet :
+
+```powershell
+cd c:\Users\vidal\Documents\wehr-app
+copy .env.docker .env
+```
+
+### Étape 2 : Éditer le fichier .env
+
+Ouvrez le fichier `.env` et remplissez avec vos vraies valeurs :
+
+```env
+# Neon Database - METTEZ VOTRE VRAIE CONNECTION STRING
+DATABASE_URL=postgresql://neondb_owner:xxx@ep-xxx.region.aws.neon.tech/neondb?sslmode=require
+
+# JWT Configuration
+JWT_SECRET=your_super_secret_jwt_key_change_this_in_production
+JWT_EXPIRES_IN=24h
+```
+
+---
+
+## 3. Build et lancement avec Docker Compose
+
+### Build les images Docker
+
+```powershell
+cd c:\Users\vidal\Documents\wehr-app
+docker-compose build
+```
+
+Cette commande va :
+- Créer l'image Docker du backend (NestJS)
+- Créer l'image Docker du frontend (Angular + Nginx)
+
+### Lancer l'application
+
+```powershell
+docker-compose up -d
+```
+
+L'option `-d` lance les conteneurs en arrière-plan (detached mode).
+
+### Vérifier que les conteneurs tournent
+
+```powershell
+docker-compose ps
+```
+
+Vous devriez voir :
+```
+NAME                COMMAND             STATUS          PORTS
+wehr-backend        "node dist/main"    Up 10 seconds   0.0.0.0:3000->3000/tcp
+wehr-frontend       "nginx -g..."       Up 10 seconds   0.0.0.0:80->80/tcp
+```
+
+---
+
+## 4. Tester l'application
+
+### Accéder à l'application
+
+- **Frontend** : http://localhost
+- **Backend API** : http://localhost:3000/api
+
+### Se connecter
+
+- **Username** : `admin`
+- **Password** : `password`
+
+---
+
+## 5. Commandes Docker utiles
+
+### Voir les logs
+
+```powershell
+# Logs de tous les conteneurs
 docker-compose logs -f
 
-# Arrêter l'application
-docker-compose down
+# Logs du backend seulement
+docker-compose logs -f backend
 
-# Redémarrer
+# Logs du frontend seulement
+docker-compose logs -f frontend
+```
+
+### Arrêter l'application
+
+```powershell
+docker-compose down
+```
+
+### Redémarrer l'application
+
+```powershell
 docker-compose restart
 ```
 
-📖 **Pour plus de détails, consultez [DOCKER-SETUP.md](DOCKER-SETUP.md)**
+### Reconstruire après modification du code
 
----
-
-### **Option 2 : Installation Classique (Sans Docker)**
-
-#### **1. Installer les dépendances**
-
-Dans le dossier backend :
-```bash
-cd backend
-npm install
+```powershell
+docker-compose down
+docker-compose build
+docker-compose up -d
 ```
 
-Dans le dossier frontend :
-```bash
-cd frontend
-npm install
-```
+### Supprimer tout (conteneurs + images + volumes)
 
-#### **2. Configuration**
-
-Créez un fichier `.env` dans le dossier `backend/` :
-```env
-DATABASE_URL=postgresql://votre_connection_string_neon_ici
-JWT_SECRET=your_super_secret_jwt_key_change_this_in_production
-JWT_EXPIRES_IN=24h
-PORT=3000
-NODE_ENV=development
-CORS_ORIGIN=http://localhost:4200
-```
-
-#### **3. Lancement**
-
-Dans deux terminaux différents :
-
-**Terminal 1 - Backend :**
-```bash
-cd backend
-npm run start:dev
-```
-
-**Terminal 2 - Frontend :**
-```bash
-cd frontend
-npm start
-```
-
-#### **Accès à l'application**
-- **Frontend** : http://localhost:4200
-- **Backend API** : http://localhost:3000/api
-
----
-
-## 📁 Structure du Projet
-
-```
-wehr-app/
-├── backend/                    # Backend NestJS
-│   ├── src/
-│   │   ├── auth/              # Module d'authentification
-│   │   ├── users/             # Module utilisateurs
-│   │   ├── employees/         # Module employés
-│   │   ├── departments/       # Module départements
-│   │   ├── jobs/              # Module postes
-│   │   ├── schedules/         # Module planning
-│   │   └── announcements/     # Module annonces
-│   ├── Dockerfile             # Configuration Docker backend
-│   └── package.json
-│
-├── frontend/                   # Frontend Angular
-│   ├── src/
-│   │   ├── app/
-│   │   │   ├── core/          # Services, guards, interceptors
-│   │   │   ├── pages/         # Composants pages
-│   │   │   └── shared/        # Composants partagés
-│   ├── Dockerfile             # Configuration Docker frontend
-│   ├── nginx.conf             # Configuration Nginx
-│   └── package.json
-│
-├── docker-compose.yml         # Orchestration Docker
-├── .env.docker                # Template variables d'environnement
-├── DOCKER-SETUP.md            # Guide Docker complet
-└── README.md                  # Ce fichier
+```powershell
+docker-compose down -v --rmi all
 ```
 
 ---
 
-## 🛠️ Technologies Utilisées
+## 6. Analyse des dépendances
 
-- **Backend** : NestJS (TypeScript)
-- **Frontend** : Angular (standalone components)
-- **Base de données** : PostgreSQL (Neon cloud)
-- **Authentification** : JWT + bcrypt
-- **Conteneurisation** : Docker + Docker Compose
-- **Web Server** : Nginx (pour le frontend en production)
+### Backend (NestJS)
 
----
+**Dépendances principales :**
+- `@nestjs/core` - Framework NestJS
+- `@nestjs/typeorm` - ORM pour PostgreSQL
+- `typeorm` - ORM
+- `pg` - Driver PostgreSQL
+- `@nestjs/jwt` - Authentification JWT
+- `@nestjs/passport` - Stratégies d'authentification
+- `bcrypt` - Hashing des mots de passe
+- `class-validator` - Validation des données
+- `class-transformer` - Transformation des objets
 
-## ✨ Fonctionnalités
+**Taille de l'image Docker :**
+- Build stage : ~1.2 GB
+- Production stage : ~200 MB (optimisé avec multi-stage build)
 
-### **Authentification**
-- ✅ Connexion avec email ou pseudo
-- ✅ Mot de passe temporaire pour nouveaux utilisateurs
-- ✅ Changement de mot de passe
-- ✅ Déconnexion
+### Frontend (Angular)
 
-### **Menus Fonctionnels**
+**Dépendances principales :**
+- `@angular/core` - Framework Angular
+- `@angular/router` - Routing
+- `@angular/forms` - Gestion des formulaires
+- `rxjs` - Programmation réactive
+- `tailwindcss` - Styling CSS
 
-- **Dashboard** : Vue d'ensemble de l'application
-- **Recrutement** : Gestion des processus de recrutement
-- **Planning** : Gestion des horaires et plannings
-- **Employés** : CRUD complet (ajout, modification, suppression, consultation)
-- **Paramètres** : 
-  - Gestion des utilisateurs
-  - Création d'utilisateurs avec mot de passe temporaire
-  - Interface de changement de mot de passe
-
----
-
-## 💡 Pourquoi NestJS + Angular ?
-
-### **NestJS pour le Backend**
-- ✅ Framework moderne et performant
-- ✅ Architecture modulaire et scalable
-- ✅ TypeScript natif
-- ✅ Parfait pour les applications Node.js d'entreprise
-- ✅ Excellent support de TypeORM et PostgreSQL
-- ✅ Facile à apprendre et à maintenir
-
-### **Angular pour le Frontend**
-- ✅ Framework le plus utilisé pour les applications professionnelles
-- ✅ Standalone components pour une architecture moderne
-- ✅ TypeScript natif pour une cohérence avec le backend
-- ✅ Excellent pour les applications RH complexes
-- ✅ Grande communauté et support à long terme
-
-**Conclusion** : NestJS + Angular = Stack TypeScript complète, idéale pour les applications RH professionnelles, scalables et maintenables. 🚀
+**Taille de l'image Docker :**
+- Build stage : ~1.5 GB
+- Production stage : ~30 MB (Nginx + fichiers statiques)
 
 ---
 
-## 📚 Documentation Supplémentaire
+## 7. Dépannage
 
-- **[DOCKER-SETUP.md](DOCKER-SETUP.md)** : Guide complet pour Docker
-- **[analyze-dependencies.ps1](analyze-dependencies.ps1)** : Script d'analyse des dépendances
+### Le backend ne démarre pas
+
+```powershell
+# Vérifier les logs
+docker-compose logs backend
+
+# Vérifier que la DATABASE_URL est correcte dans .env
+```
+
+### Le frontend ne se connecte pas au backend
+
+Vérifiez que `CORS_ORIGIN` dans le backend pointe vers `http://localhost:80`
+
+### Port déjà utilisé
+
+Si le port 80 ou 3000 est déjà utilisé :
+
+1. Arrêtez l'application qui utilise ce port
+2. OU modifiez les ports dans `docker-compose.yml` :
+
+```yaml
+ports:
+  - "8080:80"  # Frontend sur port 8080 au lieu de 80
+```
 
 ---
 
-## 👤 Auteur
+## 8. Déploiement en production
 
-- **Branche** : `vidal`
-- **Repository** : `wehr_app`
+Pour déployer en production :
+
+1. **Modifiez `docker-compose.yml`** :
+   - Changez `NODE_ENV` en `production`
+   - Mettez à jour `CORS_ORIGIN` avec votre domaine
+
+2. **Utilisez un reverse proxy** (Nginx, Traefik)
+
+3. **Activez HTTPS** avec Let's Encrypt
+
+4. **Utilisez Docker Swarm ou Kubernetes** pour l'orchestration
 
 ---
 
-## 🎉 Félicitations !
+## Résumé
 
-Votre application WeHR est maintenant prête à être utilisée ! 
+Avec Docker, vous avez :
+- Backend NestJS containerisé
+- Frontend Angular avec Nginx
+- Configuration via variables d'environnement
+- Images optimisées avec multi-stage builds
+- Orchestration avec docker-compose
+- Healthchecks pour monitoring
 
-**Besoin d'aide ?** Consultez les fichiers de documentation ou les logs Docker.
+**Commande rapide pour tout lancer :**
+
+```powershell
+cd c:\Users\vidal\Documents\wehr-app
+docker-compose up -d
+```
+
+**Arrêter :**
+
+```powershell
+docker-compose down
+```
 
